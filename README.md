@@ -1,7 +1,7 @@
 ## ticket
 
-<https://github.com/ConsenSys/truffle-webpack-demo>
-<http://truffleframework.com/boxes/webpack>
+* <https://github.com/ConsenSys/truffle-webpack-demo>
+* <http://truffleframework.com/boxes/webpack>
 
 
 ```javascript
