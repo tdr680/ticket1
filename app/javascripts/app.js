@@ -7,9 +7,13 @@ import { default as contract } from 'truffle-contract'
 
 // Import our contract artifacts and turn them into usable abstractions.
 import metacoin_artifacts from '../../build/contracts/MetaCoin.json'
+import ticket_artifacts from '../../build/contracts/Ticket.json'
 
 // MetaCoin is our usable abstraction, which we'll use through the code below.
 var MetaCoin = contract(metacoin_artifacts);
+
+// Ticket contract.
+var Ticket = contract(ticket_artifacts);
 
 // The following code is simple to show off interacting with your contracts.
 // As your needs grow you will likely need to change its form and structure.
@@ -23,6 +27,7 @@ window.App = {
 
     // Bootstrap the MetaCoin abstraction for Use.
     MetaCoin.setProvider(web3.currentProvider);
+    Ticket.setProvider(web3.currentProvider);
 
     // Get the initial account balance so it can be displayed.
     web3.eth.getAccounts(function(err, accs) {
@@ -40,6 +45,63 @@ window.App = {
       account = accounts[0];
 
       self.refreshBalance();
+
+      // Load seats.
+      $.getJSON('./seats.json', function(data) {
+        var seatRow = $('#seatRow');
+        var seatTemplate = $('#seatTemplate');
+
+        var i;
+        for (i = 0; i < data.length; i++) {
+          seatTemplate.find('.seat-location').text(data[i].location);
+          seatTemplate.find('.btn-attend').attr('data-id', data[i].id);
+
+          seatRow.append(seatTemplate.html());
+        }
+      });
+      self.bindEvents();
+      self.markAttended();
+    });
+  },
+
+  bindEvents: function() {
+    $(document).on('click', '.btn-attend', App.handleAttend);
+  },
+
+  handleAttend: function(event) {
+    event.preventDefault();
+
+    var seatId = parseInt($(event.target).data('id'));
+
+    App.setStatus("Initiating transaction... (please wait)");
+
+    var meta;
+    Ticket.deployed().then(function(instance) {
+      meta = instance;
+      return meta.attend(seatId, {from: account});
+    }).then(function() {
+      App.setStatus("Transaction complete!");
+      App.markAttended();
+    }).catch(function(e) {
+      console.log(e);
+      App.setStatus("Error sending coin; see log.");
+    });
+  },
+
+  markAttended: function() {
+    var meta;
+    Ticket.deployed().then(function(instance) {
+      meta = instance;    
+      return meta.getAttendees.call();
+    }).then(function(attendees) {
+      var i;
+      for (i = 0; i < attendees.length; i++) {
+        if (attendees[i] !== '0x0000000000000000000000000000000000000000') {
+          $('.panel-seat').eq(i).find('button').attr('disabled', true);
+        }
+      }
+    }).catch(function(err) {
+      console.log(err.message);
     });
   },
 
