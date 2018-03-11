@@ -59,7 +59,9 @@ window.App = {
           seatRow.append(seatTemplate.html());
         }
       });
+
       self.bindEvents();
+      self.setEventName();
       self.markAttended();
     });
   },
@@ -88,6 +90,18 @@ window.App = {
     });
   },
 
+  setEventName: function() {
+    var meta;
+    Ticket.deployed().then(function(instance) {
+      meta = instance;    
+      return meta.getEventName.call();
+    }).then(function(eventName) {
+      $('.ticket').find('h1').text(web3.toAscii(eventName));
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+  },
+
   markAttended: function() {
     var meta;
     Ticket.deployed().then(function(instance) {
@@ -98,6 +112,7 @@ window.App = {
       for (i = 0; i < attendees.length; i++) {
         if (attendees[i] !== '0x0000000000000000000000000000000000000000') {
           $('.panel-seat').eq(i).find('button').attr('disabled', true);
+          $('.panel-seat').eq(i).find('.seat-attendee').text(attendees[i]);
         }
       }
     }).catch(function(err) {

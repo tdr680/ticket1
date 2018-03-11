@@ -2,6 +2,7 @@ pragma solidity ^0.4.17;
 
 contract Ticket {
 
+    bytes32 eventName = "*** back to the future ***";
     address[16] public attendees;
 
     // Get a seat
@@ -17,5 +18,10 @@ contract Ticket {
     function getAttendees() public view returns (address[16]) {
 
         return attendees;
+    }
+
+    function getEventName() public view returns (bytes32) {
+
+        return eventName;
     }
 }

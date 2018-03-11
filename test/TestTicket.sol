@@ -48,4 +48,14 @@ contract TestTicket {
 
     Assert.equal(attendees[8], expected, "Attendee with seat 8 should be recorded.");
   }
+
+  // Testing initial event name
+  function testGetEventName() public {
+    
+    bytes32 expected = "*** back to the future ***";
+
+    bytes32 eventName = ticket.getEventName();
+
+    Assert.equal(eventName, expected, "Initial event name should be '*** back to the future ***'.");
+  }
 }
