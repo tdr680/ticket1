@@ -12,3 +12,11 @@ truffle(develop)> MetaCoin.deployed().then(function(deployed) {metaCoin = deploy
 truffle(develop)> metaCoin.getBalance.call(web3.eth.accounts[0])
 truffle(develop)> metaCoin.sendCoin(accounts[9], 1, {from: accounts[0]});
 ```
+
+### How to test this project
+1. Install all dependencies `npm install`
+2. Start ganache to run your local blockchain
+3. Deploy the contracts `truffle migrate`
+4. Run the test suite `truffle test`
+5. Run the development webserver `npm run dev`
+6. Visit http://localhost:8080 with your browser (make sure you have NetMask plugin installed and configured to access your local blockchain)
