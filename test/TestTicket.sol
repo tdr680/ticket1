@@ -58,4 +58,22 @@ contract TestTicket {
 
     Assert.equal(eventName, expected, "Initial event name should be '*** back to the future ***'.");
   }
+
+  // Testing date
+  function testGetDate() public {
+    
+    uint expectedDay = 1;
+    uint expectedMonth = 4;
+    uint expectedYear = 2018;
+
+    uint day;
+    uint month;
+    uint year;
+
+    (day, month, year) = ticket.getDate();
+
+    Assert.equal(day, expectedDay, "Initial day should be 1.");
+    Assert.equal(month, expectedMonth, "Initial month should be 4.");
+    Assert.equal(year, expectedYear, "Initial year should be 2018.");
+  }
 }

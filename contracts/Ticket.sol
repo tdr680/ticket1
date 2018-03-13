@@ -2,7 +2,16 @@ pragma solidity ^0.4.17;
 
 contract Ticket {
 
+     struct Date {
+        uint day;
+        uint month;
+        uint year;
+    }
+
     bytes32 eventName = "*** back to the future ***";
+
+    Date date = Date({day:1, month:4, year:2018});
+
     address[16] public attendees;
 
     // Get a seat
@@ -24,4 +33,10 @@ contract Ticket {
 
         return eventName;
     }
+
+    function getDate() public view returns (uint, uint, uint) {
+
+        return (date.day, date.month, date.year);
+    }
+
 }
