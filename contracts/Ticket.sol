@@ -8,9 +8,16 @@ contract Ticket {
         uint year;
     }
 
+    struct Location {
+        uint latitude;
+        uint longitude;
+    }
+
     bytes32 eventName = "*** back to the future ***";
 
     Date date = Date({day:1, month:4, year:2018});
+
+    Location location = Location({latitude: 47381527, longitude: 8537093});
 
     address[16] public attendees;
 
@@ -39,4 +46,12 @@ contract Ticket {
         return (date.day, date.month, date.year);
     }
 
+    function getLocation() public view returns (uint, uint) {
+
+        return (location.latitude, location.longitude);
+    }
+
+    function getNow() public view returns (uint256) {
+        return now;
+    }
 }

@@ -11,6 +11,14 @@ truffle(develop)> var metaCoin;
 truffle(develop)> MetaCoin.deployed().then(function(deployed) {metaCoin = deployed;});
 truffle(develop)> metaCoin.getBalance.call(web3.eth.accounts[0])
 truffle(develop)> metaCoin.sendCoin(accounts[9], 1, {from: accounts[0]});
+
+truffle(develop)> var ticket;
+truffle(develop)> Ticket.deployed().then(function(deployed) {ticket = deployed;});
+truffle(develop)> now = ticket.getNow();
+truffle(develop)> var ts;
+truffle(develop)> now.then(function(res) {ts = res);});
+truffle(develop)> ts.toNumber();
+truffle(develop)> date = new Date(ts * 1000);
 ```
 
 ### How to test this project

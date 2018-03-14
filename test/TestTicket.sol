@@ -76,4 +76,19 @@ contract TestTicket {
     Assert.equal(month, expectedMonth, "Initial month should be 4.");
     Assert.equal(year, expectedYear, "Initial year should be 2018.");
   }
+
+  // Testing location
+  function testGetLocation() public {
+
+    uint expectedLatitude = 47.381527 * 10**6;
+    uint expectedLongitude = 8.537093 * 10**6;
+
+    uint latitude;
+    uint longitude;
+
+    (latitude, longitude) = ticket.getLocation();
+
+    Assert.equal(latitude, expectedLatitude, "Initial day should be 1.");
+    Assert.equal(longitude, expectedLongitude, "Initial month should be 4.");
+  }
 }
