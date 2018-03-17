@@ -24,6 +24,7 @@ contract Ticket {
     // Get a seat
     function attend(uint seatId) public returns (uint) {
         require(seatId >= 0 && seatId <= 15);
+        require(attendees[seatId] == 0);
 
         attendees[seatId] = msg.sender;
 
